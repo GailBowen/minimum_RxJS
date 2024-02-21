@@ -1,6 +1,6 @@
 # minimum_RxJS
 
-#My setup:
+#My setup:  
 npm init -y
 
 npm i rxjs 
