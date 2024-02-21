@@ -5,8 +5,8 @@ npm init -y
 
 npm i rxjs 
 
-#Install these as devDependencies rather than Dependencies:
+#Install these as devDependencies rather than Dependencies:  
 npm i -D webpack webpack-cli webpack-dev-server 
 
-#To run it:
+#To run it:  
 npm start
