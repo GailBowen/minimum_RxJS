@@ -1,38 +1,38 @@
 import { fromEvent } from 'rxjs';
-import { map, filter, take } from 'rxjs/operators';
+import { map, switchMap, takeUntil, mergeMapTo } from 'rxjs/operators';
 
-var button = document.getElementById('myButton');
+var parent = document.getElementById('parent');
+var widget = document.getElementById('widget');
 
-var clicksMade = fromEvent(button, 'click');
+var mouseDowns = fromEvent(widget, 'mousedown');
+var parentMouseMoves = fromEvent(parent, 'mousemove');
+var parentMouseUps = fromEvent(parent, 'mouseup');
 
-var points = clicksMade.pipe(
-    map(function(e) {
-        return {x: e.clientX, y: e.clientY};
+var drags = mouseDowns.pipe(
+    switchMap(function(start) {
+        return parentMouseMoves.pipe(
+            map(function(move) {
+                move.preventDefault(); // prevent default behavior of dragging
+                return {
+                    left: move.clientX - start.offsetX,
+                    top: move.clientY - start.offsetY
+                };
+            }),
+            takeUntil(parentMouseUps)
+        );
     })
 );
 
-console.log('points', points);
-
-var count = 0;
-
-var subscription = points.subscribe(
-    function onNext(point) {
-       ++count;
-       alert('Clicked:' + JSON.stringify(point));
-        
-        if (count >= 3) {
-            subscription.unsubscribe();
-        }
-            
+var subscription = drags.subscribe(
+    function onNext(position) {
+        console.log('Next:', position);
+        widget.style.left = position.left + 'px';
+        widget.style.top = position.top + 'px';
     },
     function onError(error) {
-        console.log(error);
+        console.log('Error:', error);
     },
     function onComplete() {
-        console.log('done');
-    });
-
-
-
-
-
+        console.log('Complete');
+    }
+);
