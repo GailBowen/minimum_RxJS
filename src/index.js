@@ -1,9 +1,9 @@
 import { fromEvent } from 'rxjs';
 import { map, filter, take } from 'rxjs/operators';
 
-//var button = document.getElementById('myButton');
+var button = document.getElementById('myButton');
 
-var clicksMade = fromEvent(document, 'click');
+var clicksMade = fromEvent(button, 'click');
 
 var points = clicksMade.pipe(
     map(function(e) {
@@ -20,9 +20,9 @@ var subscription = points.subscribe(
         console.log('clicks ' + ++count);
         console.log('point', point);
         
-        if (count >= 3) {
-            subscription.unsubscribe();
-        }
+        // if (count >= 3) {
+        //     subscription.unsubscribe();
+        // }
             
     },
     function onError(error) {
