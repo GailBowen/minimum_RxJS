@@ -12,4 +12,4 @@ npm i -D webpack webpack-cli webpack-dev-server
 npm start
 
 #Working on this:  
-https://egghead.io/lessons/rxjs-introducing-the-observable
+https://egghead.io/lessons/javascript-using-the-map-method-with-observable
