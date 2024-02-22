@@ -17,12 +17,12 @@ var count = 0;
 
 var subscription = points.subscribe(
     function onNext(point) {
-        console.log('clicks ' + ++count);
-        console.log('point', point);
+       ++count;
+       alert('Clicked:' + JSON.stringify(point));
         
-        // if (count >= 3) {
-        //     subscription.unsubscribe();
-        // }
+        if (count >= 3) {
+            subscription.unsubscribe();
+        }
             
     },
     function onError(error) {
